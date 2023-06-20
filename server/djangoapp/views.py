@@ -31,12 +31,25 @@ def contact(request):
         return render(request, "djangoapp/contact.html", context)
 
 # Create a `login_request` view to handle sign in request
-# def login_request(request):
-# ...
+def login(request):
+    context = {}
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['psw']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('djangoapp:index')
+        else:
+            context['message'] = "Invalid username or password."
+            return render(request, 'djangoapp/index.html', context)
+    else:
+        return render(request, 'djangoapp/index.html', context)
 
 # Create a `logout_request` view to handle sign out request
-# def logout_request(request):
-# ...
+def logout(request):
+    logout(request)
+    return redirect('djangoapp:index')
 
 # Create a `registration_request` view to handle sign up request
 # def registration_request(request):
@@ -56,4 +69,5 @@ def get_dealerships(request):
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
 # ...
+
 
