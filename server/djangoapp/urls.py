@@ -17,6 +17,7 @@ urlpatterns = [
     path("contact/", view=views.contact, name='contact'),
 
     # path for registration
+    path("register/", view=views.registration, name='registration'),
 
     # path for login
     path("login/", view=views.login, name='login'),
