@@ -9,7 +9,7 @@ TIPOLOGIA_CHOICES = [
 ]
 
 class CarMake(models.Model):
-    Name = models.CharField(null=False, default="name", )
+    Name = models.CharField(null=False,max_length=2000, default="name", )
     Description = models.CharField(null=False, max_length=2000, default="mame")
     def __str__(self):
             return "Name: " + self.name + "," + \
@@ -18,9 +18,9 @@ class CarMake(models.Model):
 
 class CarModel(models.Model):
     make=models.ForeignKey(CarMake, on_delete=models.CASCADE)
-    Name = models.CharField(null=False, default="name", )
+    Name = models.CharField(null=False, max_length=2000,default="name", )
     Dealerid = models.IntegerField(default=0)
-    Type = models.CharField(null=False, choices=TIPOLOGIA_CHOICES)
+    Type = models.CharField(null=False,max_length=2000, choices=TIPOLOGIA_CHOICES)
     Year = models.DateField(default=now)
 
     def __str__(self):
@@ -33,3 +33,5 @@ class CarModel(models.Model):
 
 
 # <HINT> Create a plain Python class `DealerReview` to hold review data
+
+
