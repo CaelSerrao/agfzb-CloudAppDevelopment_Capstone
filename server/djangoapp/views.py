@@ -9,7 +9,8 @@ from django.contrib import messages
 from datetime import datetime
 import logging
 import json
-
+from .models import CarMake,CarModel
+from .restapis import get_dealers_from_cf, get_request
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
@@ -78,10 +79,7 @@ def registration(request):
             return render(request, 'djangoapp/registration.html', context)
 
 # Update the `get_dealerships` view to render the index page with a list of dealerships
-def get_dealerships(request):
-    context = {}
-    if request.method == "GET":
-        return render(request, 'djangoapp/index.html', context)
+
 
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
