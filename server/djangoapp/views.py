@@ -89,16 +89,44 @@ def get_dealerships(request):
         url = "https://us-south.functions.appdomain.cloud/api/v1/web/80e2d00c-0e24-4e32-99b7-f13b93e447ec/default/get-dealerships"
         # Get dealers from the URL
         dealerships = get_dealers_from_cf(url)
-        context={dealerships}
-        # Concat all dealer's short name
-        dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
+        context["dealership_list"] = dealerships
         # Return a list of dealer short name
         return render(request, 'djangoapp/index.html', context)
 # ...
-
+def get_dealer_details(request, dealer_id):
+    context={}
+    if request.method=="GET":
+        url="https://us-south.functions.cloud.ibm.com/api/v1/namespaces/80e2d00c-0e24-4e32-99b7-f13b93e447ec/actions/get-review"
+        reviews=get_dealer_reviews_from_cf(url)
+        context={reviews}
+        review_details=' '.join([review.id for review in reviews])
+        for review in review_details:
+            print(review.sentiment)
+        return render(request, 'djangoapp/dealer_details.html', context)
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
 # ...
+def add_review(request, dealer_id):
+    context={}
+    if request.method=="POST":
+        username=request.POST['username']
+        password=request.POST['psw']
+        user=authenticate(username=username,password=password)
+        if user is not None:
+            review["time"]=datetime.utcnow().isoformat()
+            review["dealership"]=11
+            review["review"]="This is a great car dealer"
+            review["name"]="dealer1"
+
+            json_payload["review"]=review
+            review_response=post_request(url,json_payload, dealer_id=dealer_id)
+            print(review_response)
+            return HttpResponse(review_response)
+    if request.method=="GET":
+        json_payload["review"]=review
+        review["time"]=datetime.utcnow.isoformat(review["time"])
+        review["purchase"]=car.year.strftime("%Y")
+        redirect("djangoapp:dealer_details", dealer_id=dealer_id)
 
 
 
