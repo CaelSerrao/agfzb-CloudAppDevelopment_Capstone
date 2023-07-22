@@ -65,7 +65,7 @@ def get_dealers_from_cf(url, **kwargs):
 
     return results
 
-def get_dealer_reviews_from_cf(self):
+def get_dealer_reviews_from_cf(url, dealer_id):
     results=[]
     json_result = get_request(url, dealerId=dealer_id)
     if json_result:
@@ -100,23 +100,5 @@ def analyze_review_sentiments(dealerreview):
 # def analyze_review_sentiments(text):
 # - Call get_request() with specified arguments
 # - Get the returned sentiment label such as Positive or Negative
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
